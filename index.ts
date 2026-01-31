@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
   res.status(200).json({ message: "API Running 🚀", status: "success" });
 });
 
-const PORT = Number(process.env.PORT) || 8080;
+const PORT = Number(process.env.PORT) || 8081;
 
 // ✅ IMPORTANT: create & listen server FIRST
 const server = http.createServer(app);
