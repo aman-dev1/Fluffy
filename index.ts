@@ -1,5 +1,3 @@
-
-
 import express from "express";
 import http from "http";
 import cors from "cors";
@@ -15,62 +13,41 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
-app.use(cors())
-  // origin: [
-  //   'http://localhost:3000',
-  //   'http://localhost:8080',
-  //   'http://localhost:8081',
-  //   'http://10.0.2.2:3000',
-  //   'http://10.0.2.2:8080',
-  //   'http://127.0.0.1:3000',
-  //   'http://127.0.0.1:8080',
-  //   // Allow Android device on local network (example IP used by frontend constants)
-  //   'http://10.180.181.148:8080'
-  // ],
-//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-//   credentials: false,
-//   allowedHeaders: ['Content-Type', 'Authorization']
-// }));
+app.use(cors());
 
-// Request logging middleware
-// app.use((req, res, next) => {
-//   console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`, req.body);
-//   next();
-// });
-
- app.use("/auth", authRoutes);
+// routes
+app.use("/auth", authRoutes);
 
 app.get("/", (req, res) => {
-  res.json({ message: "API Running", status: "success" });
+  res.status(200).json({ message: "API Running 🚀", status: "success" });
 });
 
-// app.post("/", (req, res) => {
-//   res.json({ message: "API Running", status: "success" });
-// });
+const PORT = Number(process.env.PORT) || 8080;
 
-const PORT = process.env.PORT || 3000;
+// ✅ IMPORTANT: create & listen server FIRST
 const server = http.createServer(app);
 
+server.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
-//socket events
+// ✅ Socket init AFTER server starts
 initializeSocket(server);
 
-connectDB().then(() => {
-   console.log("Database connected successfully");
-  server.listen(PORT as number, "0.0.0.0", () => {
-    console.log(`Server running on port ${PORT}`);
-    console.log(`Also accessible at http://localhost:${PORT}`);
+// ✅ DB connection SEPARATE (non-blocking)
+connectDB()
+  .then(() => {
+    console.log("Database connected successfully");
+  })
+  .catch((error) => {
+    console.error("Database connection failed:", error.message);
   });
-})
-.catch((error)=>{
-   console.log("Failed to start server due to database connection error",error);
-   error
- });
 
-cleanup((exitCode, signal) => {
-    console.log('Closing server...');
-    server.close(() => {
-        console.log('Server closed.');
-        mongoose.connection.close();
-    });
+// graceful shutdown
+cleanup(() => {
+  console.log("Closing server...");
+  server.close(() => {
+    mongoose.connection.close();
+    console.log("Server & DB closed");
+  });
 });
