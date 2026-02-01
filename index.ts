@@ -27,9 +27,7 @@ const PORT = Number(process.env.PORT) || 3000;
 // ✅ IMPORTANT: create & listen server FIRST
 const server = http.createServer(app);
 
-server.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server running on port ${PORT}`);
-});
+
 
 // ✅ Socket init AFTER server starts
 initializeSocket(server);
@@ -38,6 +36,9 @@ initializeSocket(server);
 connectDB()
   .then(() => {
     console.log("Database connected successfully");
+    server.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on port ${PORT}`);
+});
   })
   .catch((error) => {
     console.error("Database connection failed:", error.message);
