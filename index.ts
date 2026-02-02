@@ -37,8 +37,7 @@ connectDB()
     console.log("Database connected successfully");
     server.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
-app.use("/auth", authRoutes);
-
+  
 });
   })
   .catch((error) => {
