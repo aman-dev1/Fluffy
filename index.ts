@@ -15,11 +15,23 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// routes
-
+// ✅ ROUTES
 app.get("/", (req, res) => {
   res.status(200).json({ message: "API Running 🚀", status: "success" });
 });
+
+// 🔥🔥 THIS WAS MISSING 🔥🔥
+app.use("/auth", authRoutes);
+
+
+// app.use(express.json());
+// app.use(cors());
+
+// // routes
+
+// app.get("/", (req, res) => {
+//   res.status(200).json({ message: "API Running 🚀", status: "success" });
+// });
 
 const PORT = Number(process.env.PORT) || 3000;
 
