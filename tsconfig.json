@@ -1,10 +1,12 @@
+
+
+
 {
   "compilerOptions": {
     "target": "ES2020",
     "module": "CommonJS",
     "moduleResolution": "Node",
-
-    "rootDir": "src",
+    "rootDir": ".",
     "outDir": "dist",
 
     "esModuleInterop": true,
@@ -13,34 +15,12 @@
 
     "sourceMap": false,
     "declaration": false,
+
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*.ts"],
+  "include": ["**/*.ts"],
   "exclude": ["node_modules"]
 }
-
-
-
-// {
-//   "compilerOptions": {
-//     "target": "ES2020",
-//     "module": "CommonJS",
-//     "moduleResolution": "Node",
-//     "rootDir": ".",
-//     "outDir": "dist",
-
-//     "esModuleInterop": true,
-//     "strict": true,
-//     "skipLibCheck": true,
-
-//     "sourceMap": false,
-//     "declaration": false,
-
-//     "forceConsistentCasingInFileNames": true
-//   },
-//   "include": ["**/*.ts"],
-//   "exclude": ["node_modules"]
-// }
 
 
 
